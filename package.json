@@ -1,0 +1,17 @@
+{
+  "name": "nike-shoes-case",
+  "version": "1.0.0",
+  "description": "Nike Shoes Case by Iker Elorza",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Iker Elorza Vidal",
+  "dependencies": {
+    "axios": "^0.21.4",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "pg": "^8.7.1",
+    "voucher-code-generator": "^1.1.1"
+  }
+}
