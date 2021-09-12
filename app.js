@@ -1,68 +1,73 @@
 'use strict';
 require('dotenv').config({ silent: true });
 
-const express = require('express');
-const axios   = require('axios');
-const generator = require('./utils/generateCode');
-const postgre   = require('./utils/postgreFunctions');
-const marketing = require('./utils/marketingCloud');
-const { config } = require('dotenv');
-const app = express();
+const express = require('express'); // Web App Framework
+const axios   = require('axios');   // For external API requests
+const generator = require('./utils/generateCode'); // Code Generation related functions
+const postgre   = require('./utils/postgreFunctions'); // Postgresql related functions
+const marketing = require('./utils/marketingCloud'); // SFMC related functions
+const app       = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-
 /**
- * Endpoint that returns a short version of an url
- * @request Content-Type application/json  body { "entryURL": "https://www.koahealth.com/"}
+ * Endpoint that validates the email and triggers the Email Journey
+ * @request Content-Type application/json  body example {
+                                                Quality: { affordable: 1, comfortable: 2, 'easy to use': 3 },
+                                                satisfaction: 4,
+                                                'recommend friends': 4,
+                                                'price to competitors': 'Priced about the same',
+                                                email: 'ikersa92@gmail.com'
+                                            }
  * @response Content-Type application/json status and response
  */
 app.post('/validate', async (req, res, next) => {
-    console.log(req.body);
+    // 1. Check if the email already exists 
     let selectEmailExists = `SELECT EXISTS(SELECT 1 FROM users WHERE email = '${req.body.email}')`;
 
     try {
         let { rows } = await postgre.query(selectEmailExists);
-        if (rows[0].exists) res.status(200).send({ response: 'The User has already a vouchers code' });
+        if (rows[0].exists) res.status(400).send({ response: 'Bad Request: The User has already a vouchers code' });
         else next();
     }
     catch (e) {
         console.log(e);
+        res.status(500).send({response: `Server Error: ${e}`});
     }
 
     }, async (req, res, next) => {
+        // 2. Generate the voucher code
         let voucherCode = generator.generatecode();
         req.voucherCode = voucherCode[0];
-        console.log(`voucherCode: ${voucherCode}`);
-        console.log(`email: ${req.body.email}`);
+
+        //3. Insert the email and the code into the database
         let insertQuery = `INSERT INTO users VALUES ('${req.body.email}','${voucherCode}')`;
         try {
             let rows = await postgre.query(insertQuery);
-            //console.log(`rows.rowCount: ${rows.rowCount}`);
-            if(rows.rowCount != 1) res.status(200).send({ response: 'Some table error' });
+            if(rows.rowCount != 1) res.status(400).send({ response: 'Bad Request' });
             else next();
         }
         catch (e) {
             console.log(e);
+            res.status(500).send({response: `Server Error: ${e}`});
         }
     }, async (req, res, next) => {
+        //4. Request the token
         let configAuth = marketing.config;
-        // let test = `${process.env.URL_AUTH+process.env.TOKEN_AUTH}`;
-        // console.log(test);
         configAuth.url = `${process.env.URL_AUTH+process.env.TOKEN_AUTH}`;
         configAuth.data = marketing.dataAuth;
         axios(configAuth)
         .then(function (response) {
-            //console.log(JSON.stringify(response.data));
-            //console.log(`accessToken: ${response.data.access_token}`);
             req.token = response.data.access_token;
             next();
         })
         .catch(function (error) {
             console.log(error);
+            res.status(500).send({response: `Server Error: ${error}`});
         });
     }, async (req, res, next) => {
+        //5. Trigger the Journey
         let dataJourney2send = marketing.dataJourney;
         dataJourney2send.ContactKey = 'test123';
         dataJourney2send.Data = {
@@ -77,18 +82,21 @@ app.post('/validate', async (req, res, next) => {
             Authorization: `Bearer ${req.token}`,
             'Content-Type': 'application/json'
         }
-        // console.log(`accessToken: ${req.token}`);
-        // console.log(dataJourney2send);
-        console.log(configJourney);
+        
         axios(configJourney)
         .then(function (response) {
             console.log(JSON.stringify(response.data));
+            res.status(200).send({response: `Request Accepted: Check your email in order to get the 10% Voucher Code!`});
         })
         .catch(function (error) {
-            console.log(error);
+            res.status(500).send({response: `Server Error: ${error}`});
         });
     }
 );
+
+/**
+ * Liveness Endpoint 
+ */
 
 app.get('/monitor/liveness', (req, res) => {
     console.log(" ## Nike Shoes Case is up an running! ##")

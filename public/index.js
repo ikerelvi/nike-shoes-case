@@ -86,12 +86,19 @@ window.survey = new Survey.Model(json);
 survey
     .onComplete
     .add(function (sender) {
-        document
-         .querySelector('#surveyResult')
-         .textContent = "Check your email in order to get the 10% Voucher Code!";
-        console.log(`sender.data ${sender.data}`);
-        Api.sendRequest(sender.data, 'http://localhost:3000/validate')
+        Api.sendRequest(sender.data, 'http://localhost:3000/validate',function(error,response){
+            if(error) {
+                document
+                .querySelector('#surveyResult')
+                .textContent = error;
+                
+            }
+            else{
+                document
+                .querySelector('#surveyResult')
+                .textContent = response;
+            }
+        })
     });
 
 survey.render("surveyElement");
-

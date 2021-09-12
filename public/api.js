@@ -24,7 +24,7 @@ const Api = (function () {
   };
 
   // Send a message request to the server
-  function sendRequest(json, endpoint) {
+  function sendRequest(json, endpoint, callback) {
     // Build request payload
     let payloadToServer = {};
     if (json) {
@@ -35,27 +35,13 @@ const Api = (function () {
     let http = new XMLHttpRequest();
     http.open('POST', endpoint, true);
     http.setRequestHeader('Content-type', 'application/json');
-    //http.setRequestHeader('authorization', $("#token").val());
     http.onreadystatechange = function () {
       if (http.readyState === 4 && http.status === 200 && http.responseText) {
         Api.setResponsePayload(http.responseText);
+        callback(http.responseText);
       }
-      else if (http.readyState === 4 && http.status !== 200) { //si se produce un error comprobamos el tipo de error (fatal/warning)
-        if (http.status === 0) {
-          location.reload();
-        } else {
-          var typeError = JSON.parse(http.responseText).level;
-
-          if (typeError === "Fatal") {
-            console.log(`Fatal ${typeError}`);
-          } else {
-            if (typeError === "Warning") {
-              console.log(`Warning ${typeError}`);
-            } else {
-              console.log(`ELSE ${typeError}`);
-            }
-          }
-        }
+      else if (http.readyState === 4 && http.status !== 200) { 
+        callback(http.responseText);
       }
     };
 
