@@ -27,7 +27,7 @@ contains that auto-generated voucher.
   - Start the docker container via the `docker run --name dbsrv -p 5432:5432 -d postgresql-db` command.
 
 #### 4. Run the command `npm start` to start your server
-- `Go to http://localhost:3000/monitor/liveness on the browser to check if the server is working`
+- Go to `http://localhost:3000/monitor/liveness` on the browser to check if the server is working
 
 #### 5. Go to the main page and fulfill the Survey
-- `Go to http://localhost:3000/ on the browser`
+- Go to `http://localhost:3000/` on the browser
