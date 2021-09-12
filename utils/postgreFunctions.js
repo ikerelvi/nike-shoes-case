@@ -10,6 +10,12 @@ const conexion = {
 
 const pool  = new Pool(conexion);
 
+
+/**
+ * Function that returns the result for an input query
+ * @param {String} text The input query
+ * @return {Array} Rows with the result of that query
+ */
 module.exports = {
     query: (text) => pool.query(text)
 }

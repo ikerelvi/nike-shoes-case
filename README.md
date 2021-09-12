@@ -12,7 +12,7 @@ contains that auto-generated voucher.
 ### Steps for using the repo:
 
 #### 1. Clone the repository or download it
-  - [Download](https://github.com/ikerelvi/nike-shoes-case)
+  - [Download](https://github.com/ikerelvi/nike-shoes-case.git)
 
 #### 2. Run the command npm install and the required packages will be installed:
   -  "express": "^4.17.1",
@@ -22,10 +22,10 @@ contains that auto-generated voucher.
   -  "voucher-code-generator": "^1.1.1"
 
 #### 3. Run the command `npm start` to start your server
-- `Use http://localhost:3000/monitor/liveness on the browser to check if the server is working`
+- `Go to http://localhost:3000/monitor/liveness on the browser to check if the server is working`
 
-#### 4. From Postman or your API dev tool in order to test the endpoint
- - POST to /urlShortenerService with "entryURL" parameter filled with a URL
+#### 4. Go to the main page and fulfill the Survey
+- `Go to http://localhost:3000/ on the browser`
 
 `CURL Request Example`
 ```curl

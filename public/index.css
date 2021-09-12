@@ -1,139 +1,123 @@
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-  }
-  
-  section {
-    margin: 2em 0;
-  }
-  .page-link {
-    margin: 1em 2em;
-  }
-  
-  .survey-page-header,
-  .survey-page-header .sv_main {
-    background-color: #e7e7e7;
-  }
-  
-  .survey-page-header-content {
-    max-width: 80%;
-    margin: auto;
-    padding: 1.5em;
-  }
-  
-  .survey-page-header-content a {
-    color: white;
-    text-decoration: unset;
-  }
-  
-  .sv_main.sv_frame .sv_container .sv_header {
-    padding-top: 2em;
-  }
-  
-  .svd_container .sv_custom_header {
-    display: none;
-  }
-  
-  .sv_main.sv_frame .svd_container .sv_container {
-    max-width: none;
-    padding: unset;
-  }
-  
-  .surveys-list table thead td {
-    font-weight: bold;
-  }
-  
-  .surveys-list table td:nth-child(2) {
-    width: 50%;
-  }
-  
-  .sv_button_link {
-    color: #111;
-    width: 100px;
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
-    text-align: center;
-  }
-  
-  .sv_button_link:hover,
-  .sv_button_link:visited:hover {
-    background-color: #111;
-    border-color: #111;
-    color: #fff;
-    border-radius: 2px;
-    text-decoration: none;
-  }
-  
-  .sv_button_link:visited {
-    color: #111;
-  }
-  
-  .sv_button_link.sv_button_delete {
-    color: #ec2626;
-  }
-  
-  .sv_button_link.sv_button_delete:hover {
-    background-color: #ec2626;
-    color: #fff;
-  }
-  
-  #resultsTable td {
-    cursor: pointer;
-  }
-  
-  .sv_body {
-    overflow: scroll;
-  }
-  
-  .rounded-button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    min-width: 155px;
-    height: 34px;
-    line-height: 34px;
-    border-radius: 17px;
-    background-color: #111;
-    padding: 0 2em;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-    color: #ffffff;
-    border: none;
-    display: inline-block;
-    cursor: pointer;
-    outline: none; 
-  }
-  
-  .sa-table .rounded-button {
-    background-color: #111;
-    margin-right: 50px; 
-  }
-  
-  .sv_main.sv_default_css .sv_body {
-    border-color: #111 !important;
-  }
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
 
-  .sv_main.sv_default_css input[type="button"], .sv_default_css button {
-      background-color: #111 !important;
-  }
+.page-link {
+  margin: 1em 2em;
+}
 
-  .sv_main.sv_default_css .sv_q_rating_item.active .sv_q_rating_item_text{
+.survey-page-header,
+.survey-page-header .sv_main {
+  background-color: #e7e7e7;
+}
+
+.survey-page-header-content {
+  max-width: 80%;
+  margin: auto;
+  padding: 1.5em;
+}
+
+.survey-page-header-content a {
+  color: white;
+  text-decoration: unset;
+}
+
+.sv_main.sv_frame .sv_container .sv_header {
+  padding-top: 2em;
+}
+
+.svd_container .sv_custom_header {
+  display: none;
+}
+
+.sv_main.sv_frame .svd_container .sv_container {
+  max-width: none;
+  padding: unset;
+}
+
+.surveys-list table thead td {
+  font-weight: bold;
+}
+
+.surveys-list table td:nth-child(2) {
+  width: 50%;
+}
+
+.sv_button_link {
+  color: #111;
+  width: 100px;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.sv_button_link:hover,
+.sv_button_link:visited:hover {
+  background-color: #111;
+  border-color: #111;
+  color: #fff;
+  border-radius: 2px;
+  text-decoration: none;
+}
+
+.sv_button_link:visited {
+  color: #111;
+}
+
+.sv_body {
+  overflow: scroll;
+}
+
+.rounded-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  min-width: 155px;
+  height: 34px;
+  line-height: 34px;
+  border-radius: 17px;
+  background-color: #111;
+  padding: 0 2em;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+  border: none;
+  display: inline-block;
+  cursor: pointer;
+  outline: none; 
+}
+
+.sa-table .rounded-button {
+  background-color: #111;
+  margin-right: 50px; 
+}
+
+.sv_main.sv_default_css .sv_body {
+  border-color: #111 !important;
+}
+
+.sv_main.sv_default_css input[type="button"], .sv_default_css button {
+  background-color: #111 !important;
+}
+
+.sv_main.sv_default_css .sv_q_rating_item.active .sv_q_rating_item_text{
+  background-color: #111 !important;
+  border-color: #111 !important;
+}
+
+.sv_main.sv_default_css .sv_q_rating_item .sv_q_rating_item_text:hover{
+  border-color: #111 !important;
+}
+
+input[type='radio']:after {
+  background-color: #111 !important;
+}
+
+input[type='radio']:checked:after {
     background-color: #111 !important;
-    border-color: #111 !important;
-  }
-  
-  .sv_main.sv_default_css .sv_q_rating_item .sv_q_rating_item_text:hover{
-    border-color: #111 !important;
-  }
 
-  input[type='radio']:after {
-    background-color: #111 !important;
-  }
-
-    input[type='radio']:checked:after {
-        background-color: #111 !important;
-
-    }
+}
