@@ -21,36 +21,13 @@ contains that auto-generated voucher.
   -  "pg": "^8.7.1",
   -  "voucher-code-generator": "^1.1.1"
 
-#### 3. Run the command `npm start` to start your server
+#### 3. Add Postgresql to the backend
+  - Install [docker](https://www.docker.com/) on your computer.
+  - Build a postgresql-db docker container via the `docker build -t postgresql-db .` command in the `docker/postgresql-db` folder.
+  - Start the docker container via the `docker run --name dbsrv -p 5432:5432 -d postgresql-db` command.
+
+#### 4. Run the command `npm start` to start your server
 - `Go to http://localhost:3000/monitor/liveness on the browser to check if the server is working`
 
-#### 4. Go to the main page and fulfill the Survey
+#### 5. Go to the main page and fulfill the Survey
 - `Go to http://localhost:3000/ on the browser`
-
-`CURL Request Example`
-```curl
-    curl --location --request POST 'localhost:3000/urlShortenerService' \
-    --header 'Content-Type: application/json' \
-    --data-raw '{
-        "entryURL": "https://www.koahealth.com/"
-    }'
-```
-`NodeJS Request Example`
-```javascript
-    var request = require('request');
-    var options = {
-        'method': 'POST',
-        'url': 'localhost:3000/urlShortenerService',
-        'headers': {
-            'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        "entryURL": "https://www.koahealth.com/"
-    })
-
-    };
-    request(options, function (error, response) {
-        if (error) throw new Error(error);
-        console.log(response.body);
-    });
-```

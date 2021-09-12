@@ -1,5 +1,5 @@
 'use strict';
-require('dotenv').config({ silent: true });
+require('dotenv').config({ silent: true }); //Loads env variables from .env file
 
 const express = require('express'); // Web App Framework
 const axios   = require('axios');   // For external API requests
@@ -53,10 +53,13 @@ app.post('/validate', async (req, res, next) => {
             res.status(500).send({response: `Server Error: ${e}`});
         }
     }, async (req, res, next) => {
-        //4. Request the token
+        //4. Request the token (TODO - Some function in order to retrieve the current Token if it exists in the database)
+        // - 4.1 Prepare the auth config to be sent
         let configAuth = marketing.config;
         configAuth.url = `${process.env.URL_AUTH+process.env.TOKEN_AUTH}`;
         configAuth.data = marketing.dataAuth;
+
+        // - 4.2 Axios call to request the token
         axios(configAuth)
         .then(function (response) {
             req.token = response.data.access_token;
@@ -66,15 +69,17 @@ app.post('/validate', async (req, res, next) => {
             console.log(error);
             res.status(500).send({response: `Server Error: ${error}`});
         });
-    }, async (req, res, next) => {
+    }, async (req, res) => {
         //5. Trigger the Journey
+        // - 5.1 Prepare the data to be sent to the Journey
         let dataJourney2send = marketing.dataJourney;
-        dataJourney2send.ContactKey = 'test123';
+        dataJourney2send.ContactKey = 'test123'; //(TODO - Some function in order to generate the ContactKey)
         dataJourney2send.Data = {
             email: req.body.email,
             voucher_code: req.voucherCode
         }
-
+        
+        // - 5.2 Prepare the config to be sent to the Journey
         let configJourney = marketing.config;
         configJourney.url = `${process.env.URL_APIS+process.env.JOURNEY_EVENT}`;
         configJourney.data = dataJourney2send;
@@ -83,6 +88,7 @@ app.post('/validate', async (req, res, next) => {
             'Content-Type': 'application/json'
         }
         
+        // - 5.3 Axios call to trigger the journey
         axios(configJourney)
         .then(function (response) {
             console.log(JSON.stringify(response.data));
@@ -97,7 +103,6 @@ app.post('/validate', async (req, res, next) => {
 /**
  * Liveness Endpoint 
  */
-
 app.get('/monitor/liveness', (req, res) => {
     console.log(" ## Nike Shoes Case is up an running! ##")
     res.json({ status: "## START -- Nike Shoes Case is up an running! ##" });
